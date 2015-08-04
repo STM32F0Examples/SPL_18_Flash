@@ -3,7 +3,7 @@
 #include <string.h>
 
 /* |Checksum | NOT USED | DATA ...  */
-const unsigned char __attribute__((aligned (1024))) flashDataBank0[1024]={0xFF,0x00};
+const unsigned char __attribute__((aligned (1024))) flashDataBank0[1024]={0x00,0x00};
 
 uint8_t getChecksum(const uint8_t * data, uint8_t nData);
 
