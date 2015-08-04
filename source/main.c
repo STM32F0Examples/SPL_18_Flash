@@ -7,7 +7,9 @@ void setToMaxSpeed(void);
 Serial_t UART2_serial = {UART2_getChar, UART2_sendChar};
 
 #define IN_BUFFER_SIZE 80
+#define SAVE_SIZE 40
 char inputBuffer[IN_BUFFER_SIZE];
+char mySavedString[SAVE_SIZE];
 
 int main(void)
 {
@@ -15,13 +17,13 @@ int main(void)
 	UART2_init(9600);
 	serial_printf(UART2_serial,"\nSystem ready\n");
 	while(1){
-		serial_printf(UART2_serial,"Showing Flash data\n");
-		flash_loadData(0,inputBuffer,IN_BUFFER_SIZE);
-		serial_printf(UART2_serial,">>%s\n",inputBuffer);
+		serial_printf(UART2_serial,"BANK0 status: %s\n",(isDataValid(SAVE_SIZE))?"valid":"invalid");
+		if(isDataValid(SAVE_SIZE)) safeFlash_loadData(mySavedString,SAVE_SIZE);
+		serial_printf(UART2_serial,"Saved data: %s\n",mySavedString);
 		serial_printf(UART2_serial,"$ ");
 		serial_gets(UART2_serial,inputBuffer,IN_BUFFER_SIZE);
 		serial_printf(UART2_serial,"%s\n",inputBuffer);
-		flash_writeData(0,inputBuffer,IN_BUFFER_SIZE);
+		safeFlash_saveData(inputBuffer,SAVE_SIZE);
 	}
 }
 
