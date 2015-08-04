@@ -16,10 +16,10 @@
 extern "C" {
 #endif
 
-void flash_writeData(int bankSelect, char * newDataPtr, int dataSize);
+void safeFlash_rawWriteData(int bankSelect, char * newDataPtr, int dataSize);
 int safeFlash_saveData(const char * pData, int dataSize);
 int safeFlash_loadData(char * destinyPtr, int dataSize);
-int isDataValid(int dataSize);
+int safeFlash_isDataValid(int dataSize);
 
 
 

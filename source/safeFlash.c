@@ -34,10 +34,10 @@ int safeFlash_saveData(const char * pData, int dataSize){
 	FLASH_ProgramWord((int)saveBankAddress,tempData);
 	FLASH_WaitForLastOperation(100000);
 	FLASH_Lock();
-	return isDataValid(dataSize);
+	return safeFlash_isDataValid(dataSize);
 }
 
-void flash_writeData(int bankSelect, char * newDataPtr, int dataSize){
+void safeFlash_rawWriteData(int bankSelect, char * newDataPtr, int dataSize){
 	int32_t newData;
 	int8_t * pNewData=(int8_t *) &newData;
 	int flashBankAddress=(int)flashDataBank0;
@@ -56,7 +56,7 @@ void flash_writeData(int bankSelect, char * newDataPtr, int dataSize){
 }
 
 int safeFlash_loadData(char * destinyPtr, int dataSize){
-	if(isDataValid(dataSize)){
+	if(safeFlash_isDataValid(dataSize)){
 		memcpy(destinyPtr,(flashDataBank0+2),dataSize);
 		return FLASH_SUCCESS;
 	}else{
@@ -82,7 +82,7 @@ uint8_t getChecksum(const uint8_t * data, uint8_t nData){
 	return checksum;
 }
 
-int isDataValid(int dataSize){
+int safeFlash_isDataValid(int dataSize){
 	const unsigned char * pBank = flashDataBank0;
 	const unsigned char * pData= pBank+2;
 	unsigned char bankChecksum= pBank[0];

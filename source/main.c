@@ -17,8 +17,8 @@ int main(void)
 	UART2_init(9600);
 	serial_printf(UART2_serial,"\nSystem ready\n");
 	while(1){
-		serial_printf(UART2_serial,"BANK0 status: %s\n",(isDataValid(SAVE_SIZE))?"valid":"invalid");
-		if(isDataValid(SAVE_SIZE)) safeFlash_loadData(mySavedString,SAVE_SIZE);
+		serial_printf(UART2_serial,"BANK0 status: %s\n",(safeFlash_isDataValid(SAVE_SIZE))?"valid":"invalid");
+		if(safeFlash_isDataValid(SAVE_SIZE)) safeFlash_loadData(mySavedString,SAVE_SIZE);
 		serial_printf(UART2_serial,"Saved data: %s\n",mySavedString);
 		serial_printf(UART2_serial,"$ ");
 		serial_gets(UART2_serial,inputBuffer,IN_BUFFER_SIZE);
